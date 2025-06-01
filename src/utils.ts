@@ -10,3 +10,11 @@ export const getRemainingTime = (totalWorkTime: number, startTime: number): numb
     const timeRemaining: number = Math.abs(totalWorkTime - msPassed);
     return timeRemaining;
 }
+
+export const generateCoordinates = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const x = Math.floor(Math.random() * width);
+    const y = Math.floor(Math.random() * height);
+    return { x, y };
+}
