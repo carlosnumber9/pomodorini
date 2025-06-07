@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react"
-import { generateCoordinates } from "./utils";
-import type { Coordinates } from "./declarations";
+import { animatePomio } from "./utils";
 
 export const usePomio = () => {
-    const [coords, setCoords] = useState<Coordinates>({ x: 0, y: 0 });
+    const [pomios, _setPomios] = useState<number[]>(Array.from({ length: Math.random() * 10 }, (_, i) => i + 1));
 
     useEffect(() => {
-        setCoords(generateCoordinates());
+        const intervals: number[] = pomios.map((id: number) => setInterval(() => {
+            animatePomio(id);
+        }, 5000)
+        );
+
+        return () => {
+            intervals.forEach((interval: number) => clearInterval(interval));
+        };
     }, []);
 
-    return coords;
+    return pomios;
 }

@@ -3,15 +3,19 @@ import { usePomodorini } from './usePomodorini';
 import { Pomio } from './components';
 import type { Mode } from './declarations';
 import './App.css'
+import { usePomio } from './usePomio';
 
 function App() {
   const [hours, setHours] = useState<number>(0);
   const [mode, setMode] = useState<Mode>('IDLE');
   const detailedTimeLeft: string = usePomodorini(hours, mode, setMode);
+	const pomios: number[] = usePomio();
   return (
     <>
       <h1>Pomodorini</h1>
-      <Pomio />
+      {pomios.length && pomios.map((id: number) => (
+        <Pomio key={id} id={id} />
+      ))}
       {mode === 'IDLE' && <div className="container">
         <input type='number' onChange={(e: ChangeEvent<HTMLInputElement>) => setHours(parseInt(e.target.value) ?? 0)} />
         <button onClick={() => setMode('WORKING')}> Start </button>

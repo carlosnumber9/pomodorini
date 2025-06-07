@@ -1,3 +1,5 @@
+import gsap from "gsap";
+
 export const getDetailedTime = (ms: number): string => {
     const hh = Math.floor(ms / (1000 * 60 * 60));
     const mm = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
@@ -11,10 +13,20 @@ export const getRemainingTime = (totalWorkTime: number, startTime: number): numb
     return timeRemaining;
 }
 
-export const generateCoordinates = () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    const x = Math.floor(Math.random() * width);
-    const y = Math.floor(Math.random() * height);
-    return { x, y };
+export const animatePomio = (id: number): void => {
+    gsap.to(`#pomio-${id}`, {
+        scale: 0,
+        duration: 0.3,
+    });
+    gsap.set(`#pomio-${id}`, {
+        top: `${Math.random() * 100}vh`,
+        left: `${Math.random() * 100}vw`,
+        delay: 1,
+    }
+    );
+    gsap.to(`#pomio-${id}`, {
+        scale: 1,
+        duration: 0.3,
+        delay: 1.5,
+    });
 }
