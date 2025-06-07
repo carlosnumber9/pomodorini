@@ -7,11 +7,11 @@
     transform: scaleY(1);
   }
 
-  3% {
+  2% {
     transform: scaleY(0.1);
   }
 
-  7% {
+  5% {
     transform: scaleY(1);
   }
 }
