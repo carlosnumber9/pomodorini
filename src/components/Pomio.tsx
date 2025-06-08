@@ -12,7 +12,7 @@ export const Pomio: React.FC<Props> = ({ id }) => (
 		xmlnsXlink="http://www.w3.org/1999/xlink"
 		width="100%"
 		viewBox="0 0 512 512"
-		enable-background="new 0 0 512 512"
+		enableBackground="new 0 0 512 512"
 		xmlSpace="preserve"
 		id={`pomio-${id}`}>
 

@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import type { Mode } from "./declarations";
-import { getDetailedTime, getRemainingTime } from "./utils";
+import type { Mode } from "../declarations";
+import { getMsFromHours, getRemainingTime } from "../utils";
 
 export const usePomodorini = (hours: number, mode: Mode, setMode: React.Dispatch<React.SetStateAction<Mode>>) => {
-    const totalWorkTime: number = hours * 60 * 60 * 1000;
+    const totalWorkTime: number = getMsFromHours(hours);
     const [timeLeft, setTimeLeft] = useState<number>(totalWorkTime);
     const [activeCountdown, setActiveCountdown] = useState<number | undefined>(undefined);
-    const [detailedTimeLeft, setDetailedTimeLeft] = useState<string>(getDetailedTime(totalWorkTime));
     const startTime = useRef<number>(0);
 
     const secondlyCheck = () => {
@@ -34,7 +33,5 @@ export const usePomodorini = (hours: number, mode: Mode, setMode: React.Dispatch
         }
     }, [mode]);
 
-    useEffect(() => setDetailedTimeLeft(getDetailedTime(timeLeft)), [timeLeft]);
-
-    return detailedTimeLeft;
+    return timeLeft;
 }

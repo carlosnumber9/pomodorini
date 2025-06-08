@@ -30,3 +30,5 @@ export const animatePomio = (id: number): void => {
         delay: 1.5,
     });
 }
+
+export const getMsFromHours = (hours: number): number => hours * 60 * 60 * 1000;

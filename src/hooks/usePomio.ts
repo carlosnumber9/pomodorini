@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react"
-import { animatePomio } from "./utils";
+import { animatePomio } from "../utils";
 
 export const usePomio = () => {
     const pomios = useRef<number[]>(
-        Array.from({ length: Math.floor(Math.random() * 2) + 1 }, (_, i) => i + 1)
+        Array.from({ length: Math.floor(Math.random() * 10) + 1 }, (_, i) => i + 1)
     );
 
     const intervals: number[] = [];

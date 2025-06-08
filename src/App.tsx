@@ -1,36 +1,40 @@
 import { useState, type ChangeEvent } from 'react'
-import { usePomodorini } from './usePomodorini';
-import { Pomio } from './components';
+import { Pomio, Timer } from './components';
+import { usePomio, usePomodorini } from './hooks';
 import type { Mode } from './declarations';
 import './App.css'
-import { usePomio } from './usePomio';
+import { getDetailedTime } from './utils';
 
 function App() {
-  const [hours, setHours] = useState<number>(0);
+  const [totalWorkTime, setTotalWorkTime] = useState<number>(0);
   const [mode, setMode] = useState<Mode>('IDLE');
-  const detailedTimeLeft: string = usePomodorini(hours, mode, setMode);
-	const pomios: number[] = usePomio();
+  const timeLeft: number = usePomodorini(totalWorkTime, mode, setMode);
+  const pomios: number[] = usePomio();
   return (
     <>
       <h1>Pomodorini</h1>
-      {pomios.length && pomios.map((id: number) => (
-        <Pomio key={id} id={id} />
-      ))}
-      {mode === 'IDLE' && <div className="container">
-        <input type='number' onChange={(e: ChangeEvent<HTMLInputElement>) => setHours(parseInt(e.target.value) ?? 0)} />
-        <button onClick={() => setMode('WORKING')}> Start </button>
-        <p>
-          Enter the number of hours to work on and click on start
-        </p>
-      </div>}
+
+      {mode === 'IDLE' && <>
+        {pomios.length && pomios.map((id: number) => (
+          <Pomio key={id} id={id} />
+        ))}
+        <div className="container">
+          <input type='number' onChange={(e: ChangeEvent<HTMLInputElement>) => setTotalWorkTime(parseInt(e.target.value) ?? 0)} />
+          <button onClick={() => setMode('WORKING')}> Start </button>
+          <p>
+            Enter the number of hours to work on and click on start
+          </p>
+        </div></>
+      }
 
       {mode === 'WORKING' && <div className="container">
-        <h3> {`Counting down to ${hours} hours`} </h3>
-        <h4> {`Time left: ${detailedTimeLeft} `} </h4>
+        <h3> {`Counting down to ${totalWorkTime} hours`} </h3>
+        <h4> {`Time left: ${getDetailedTime(timeLeft)} `} </h4>
         <button onClick={() => setMode('FINISHED')}> Stop </button>
         <p>
           Giving up? Press <i> Stop </i> to get out
         </p>
+        <Timer totalTime={totalWorkTime} timeLeft={timeLeft} />
       </div>}
 
       {mode === 'FINISHED' && <div className="container">
