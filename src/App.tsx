@@ -1,21 +1,20 @@
 import { useState, type ChangeEvent } from 'react'
 import { Pomio, Timer } from './components';
-import { usePomio, usePomodorini } from './hooks';
+import { usePomodorini } from './hooks';
 import type { Mode } from './declarations';
-import './App.css'
 import { getDetailedTime } from './utils';
+import './App.css'
 
 function App() {
   const [totalWorkTime, setTotalWorkTime] = useState<number>(0);
   const [mode, setMode] = useState<Mode>('IDLE');
   const timeLeft: number = usePomodorini(totalWorkTime, mode, setMode);
-  const pomios: number[] = usePomio();
   return (
     <>
       <h1>Pomodorini</h1>
 
       {mode === 'IDLE' && <>
-        {pomios.length && pomios.map((id: number) => (
+        {Array.from({ length: (Math.random() * 10) + 2 }).map((_, id: number) => (
           <Pomio key={id} id={id} />
         ))}
         <div className="container">
