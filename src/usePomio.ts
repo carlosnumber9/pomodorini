@@ -1,19 +1,31 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef } from "react"
 import { animatePomio } from "./utils";
 
 export const usePomio = () => {
-    const [pomios, _setPomios] = useState<number[]>(Array.from({ length: Math.random() * 10 }, (_, i) => i + 1));
+    const pomios = useRef<number[]>(
+        Array.from({ length: Math.floor(Math.random() * 2) + 1 }, (_, i) => i + 1)
+    );
+
+    const intervals: number[] = [];
+    const timeouts: number[] = [];
 
     useEffect(() => {
-        const intervals: number[] = pomios.map((id: number) => setInterval(() => {
-            animatePomio(id);
-        }, 5000)
+        pomios.current.map((id: number) => {
+            const timeout: number = setTimeout(() => {
+                const interval: number = setInterval(() => {
+                    animatePomio(id);
+                }, Math.random() * 5000 + 5000);
+                intervals.push(interval);
+            }, Math.random() * 4000 + 1000);
+            timeouts.push(timeout);
+        }
         );
 
         return () => {
             intervals.forEach((interval: number) => clearInterval(interval));
+            timeouts.forEach((timeout: number) => clearTimeout(timeout));
         };
     }, []);
 
-    return pomios;
+    return pomios.current;
 }

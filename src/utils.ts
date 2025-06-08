@@ -16,7 +16,7 @@ export const getRemainingTime = (totalWorkTime: number, startTime: number): numb
 export const animatePomio = (id: number): void => {
     gsap.to(`#pomio-${id}`, {
         scale: 0,
-        duration: 0.3,
+        duration: 0.2,
     });
     gsap.set(`#pomio-${id}`, {
         top: `${Math.random() * 100}vh`,
@@ -26,7 +26,7 @@ export const animatePomio = (id: number): void => {
     );
     gsap.to(`#pomio-${id}`, {
         scale: 1,
-        duration: 0.3,
+        duration: 0.2,
         delay: 1.5,
     });
 }
